@@ -20,3 +20,7 @@ bin/
 *.class
 *.DS_Store
 deleteme/
+
+# Ignore python cache files
+__pycache__/
+*.py[cod]
