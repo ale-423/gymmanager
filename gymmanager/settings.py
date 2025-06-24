@@ -76,19 +76,27 @@ WSGI_APPLICATION = "gymmanager.wsgi.application"
 import pymysql
 pymysql.install_as_MySQLdb()
 
+# Per Railway - usa variabili d'ambiente
+import os
+from decouple import config
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "gymdb",
-        "USER": "root",
-        "PASSWORD": "12341234",
-        "HOST": "localhost",
-        "PORT": "3306",
+        "NAME": config('MYSQL_DATABASE', default='gymdb'),
+        "USER": config('MYSQL_USER', default='root'),
+        "PASSWORD": config('MYSQL_PASSWORD', default='12341234'),
+        "HOST": config('MYSQL_HOST', default='localhost'),
+        "PORT": config('MYSQL_PORT', default='3306'),
         "OPTIONS": {
             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
 }
+
+# Configura per produzione
+DEBUG = config('DEBUG', default=True, cast=bool)
+ALLOWED_HOSTS = ['*']  # Per Railway
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
